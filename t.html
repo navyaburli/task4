@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do List</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding-top: 50px;
+    }
+
+    #todo {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #todo h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .todo-input {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .todo-input input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #addButton {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #addButton:hover {
+      background-color: #0056b3;
+    }
+
+    #taskList {
+      list-style: none;
+      padding: 0;
+    }
+
+    #taskList li {
+      background-color: #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    #taskList li button {
+      padding: 5px 10px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #taskList li button:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <section id="todo">
+    <div class="todo-container">
+      <h1>To-Do List</h1>
+      <div class="todo-input">
+        <input type="text" id="taskInput" placeholder="Enter your task here...">
+        <button onclick="addTask()" id="addButton">ADD</button>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+  </section>
+
+  <script>
+    window.onload = function () {
+      const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      savedTasks.forEach(task => addTaskToDOM(task));
+    };
+
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const taskText = taskInput.value.trim();
+      if (taskText === "") return;
+
+      addTaskToDOM(taskText);
+      saveTask(taskText);
+      taskInput.value = "";
+    }
+
+    function addTaskToDOM(taskText) {
+      const taskList = document.getElementById("taskList");
+
+      const li = document.createElement("li");
+      li.textContent = taskText;
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.onclick = function () {
+        li.remove();
+        removeTask(taskText);
+      };
+
+      li.appendChild(deleteBtn);
+      taskList.appendChild(li);
+    }
+
+    function saveTask(taskText) {
+      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      tasks.push(taskText);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function removeTask(taskText) {
+      let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      tasks = tasks.filter(task => task !== taskText);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  </script>
+</body>
+</html>

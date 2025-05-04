@@ -1,0 +1,21 @@
+#cal{
+    width:200px;
+    border:1px solid rgb(206, 201, 201);
+    
+   border-radius:5px;
+}
+#display{
+    width:85%;
+    margin:10px;
+    font-size:25px;
+}
+.button_container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+.button{
+    margin:3px;
+    width:45px;
+    height:45px;
+}

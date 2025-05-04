@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color:darkgray;
+    }
+    h1{
+      text-align: center;
+    }
+    .controls {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      justify-content: center;
+    }
+    select {
+      padding: 8px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .product img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Product Listing</h1>
+
+  <div class="controls">
+    <select id="categoryFilter">
+      <option value="all">All Categories</option>
+      <option value="electronics">Electronics</option>
+      <option value="clothing">Clothing</option>
+    </select>
+
+    <select id="priceFilter">
+      <option value="all">All Prices</option>
+      <option value="low">Below ₹1000</option>
+      <option value="mid">₹1000 - ₹5000</option>
+      <option value="high">Above ₹5000</option>
+    </select>
+
+    <select id="sortRating">
+      <option value="default">Sort by Rating</option>
+      <option value="high">High to Low</option>
+      <option value="low">Low to High</option>
+    </select>
+  </div>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <script>
+    const products = [
+      { name: "Smartphone", price: 8000, category: "electronics", rating: 4.5, image: "smart.png" },
+      { name: "T-shirt", price: 500, category: "clothing", rating: 4.0, image: "shirt.png" },
+      { name: "Laptop", price: 40000, category: "electronics", rating: 4.8, image: "laptop.jpeg" },
+      { name: "Jeans", price: 1200, category: "clothing", rating: 3.9, image: "jeans.jpeg" },
+      { name: "Headphones", price: 1500, category: "electronics", rating: 4.2, image: "headphones.png" },
+    ];
+
+    const productGrid = document.getElementById("productGrid");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const priceFilter = document.getElementById("priceFilter");
+    const sortRating = document.getElementById("sortRating");
+
+    function displayProducts(productList) {
+      productGrid.innerHTML = "";
+      productList.forEach(p => {
+        const div = document.createElement("div");
+        div.classList.add("product");
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>₹${p.price}</p>
+          <p>Category: ${p.category}</p>
+          <p>Rating: ⭐${p.rating}</p>
+        `;
+        productGrid.appendChild(div);
+      });
+    }
+
+    function applyFilters() {
+      let filtered = [...products];
+
+      const category = categoryFilter.value;
+      const price = priceFilter.value;
+      const sort = sortRating.value;
+
+      // Filter by category
+      if (category !== "all") {
+        filtered = filtered.filter(p => p.category === category);
+      }
+
+      // Filter by price
+      if (price === "low") {
+        filtered = filtered.filter(p => p.price < 1000);
+      } else if (price === "mid") {
+        filtered = filtered.filter(p => p.price >= 1000 && p.price <= 5000);
+      } else if (price === "high") {
+        filtered = filtered.filter(p => p.price > 5000);
+      }
+
+      // Sort by rating
+      if (sort === "high") {
+        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (sort === "low") {
+        filtered.sort((a, b) => a.rating - b.rating);
+      }
+
+      displayProducts(filtered);
+    }
+
+    categoryFilter.addEventListener("change", applyFilters);
+    priceFilter.addEventListener("change", applyFilters);
+    sortRating.addEventListener("change", applyFilters);
+
+    // Initial display
+    displayProducts(products);
+  </script>
+
+</body>
+</html>
+

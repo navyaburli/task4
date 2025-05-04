@@ -1,0 +1,251 @@
+/*Google Fonts - Poppins*/
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+ * {
+   margin:0;
+   padding:0;
+   box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+ } 
+ body {
+   height:100vh;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   background-color:white;
+ }
+ .profile-card {
+  max-width:370px;
+  width:100%;
+  background:white;
+  border-radius:24px;
+  padding:25px;
+  box-shadow:0 5px 10px rgba(0,0,0,0.1);
+  position:relative;
+}
+.profile-card::before{
+  content:"";
+  position:absolute;
+  height:36%;
+  width:100%;
+  top:0;
+  left:0;
+  border-radius:24px 24px 0 0;
+  background-color:blue;
+
+}
+ 
+  .image {
+   position:relative;
+   height:150px;
+   width:150px;
+   align-items:center;
+   border-radius:50%;
+   background-color:blue;
+   padding:3px;
+   margin-bottom:10px;
+  }
+  .image .profile-img {
+   height:100%;
+   width:100%;
+   object-fit:cover;
+   border-radius:50%;
+   border:3px solid white;
+  }
+  .profile-card .text-data {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    color:#333;
+   }
+   .text-data .name {
+    font-size:22px;
+    font-weight:500;
+   }
+   .text-data .job {
+    font-size:15px;
+    font-weight:400;
+   }
+    .profile-card .media-buttons {
+     display:flex;
+     align-items:center;
+     margin-top:15px;
+    }
+    .media-buttons .link {
+     display:flex;
+     align-items:center;
+     color:white;
+     font-size:18px;
+     height:34px;
+     width:34px;
+     margin:0 8px;
+     border-radius:50%;
+     background-color:blue;
+     text-decoration:none;
+    }
+    .profile-card .buttons {
+      display:flex;
+      align-items:center;
+      margin-top:25px;
+    }
+    
+    .buttons .button {
+       color:#fff;
+       font-size:14px;
+       font-weight:400;
+       border:none;
+       border-radius:24px;
+       margin:0 10px;
+       padding:8px 24px;
+       background-color:blue;
+       cursor:pointer;
+       transition:all 0.3s ease;
+    }
+  .buttons .button:hover{
+    background-color:blue;
+  }
+  .profile-card .analytics{
+    display:flex;
+    align-items:center;
+    margin-top:25px;
+  }
+  .analytics .data{
+    display:flex;
+    align-items:center;
+    color:#333;
+    padding:0 20px;
+    border-right:2px solid #e7e7e7;
+  }
+  .data i{
+    font-size:10px;
+    margin-right:6px;
+  }
+  .data:last-child{
+    border-right:none;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ app.js 
+  
+  import {useState} from 'react'
+import './App.css'
+function App(){
+  let[todoInput,updateInput]=useState()
+  let [todoList,updateTodos]=useState(
+    [
+      {
+        id:1,
+        task:'Learn React'
+      },
+      {
+        id:2,
+        task:'Learn Angular'
+      }
+    ])
+    let nextId=3
+    function addNewTodo(){
+      if(todoInput==" "){
+        alert("Add some task")
+      }
+      else{
+        let newTodos=[
+          ...todoList,
+          {
+            id:nextId++,
+            task:todoInput
+          }
+        ]
+        updateTodos(newTodos);
+        updateInput(" ")
+      }
+    }
+    function deleteTodo(id){
+      let updatedTodos=todoList.filter(
+        (todo)=>{
+          return todo.id!=id
+        }
+      )
+      updateTodos(updatedTodos)
+        }
+      
+    
+        return(
+   <div className="container mt-5 w-50">
+    <h3 className="text-center">Todo App using React</h3>
+     <div className="input-group">
+       <input  className="form-control" type="text"/>
+         <button className="btn btn-primary">Add</button>
+       
+     </div>
+     <ul className="list-group mt=4">
+      {
+        todoList.map(
+          (todo)=>{
+            return(
+              <li className="list-group-item">
+                <p>{todo.task}</p>
+                <button className="btn">X</button>
+              </li>
+            )
+          }
+        )
+      }
+     </ul>
+   </div>
+ )
+}
+export default App
+
+
+
+
+app.css
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
